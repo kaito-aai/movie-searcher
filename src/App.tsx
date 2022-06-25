@@ -3,11 +3,17 @@ import { Movie, MovieTile } from './components/MovieTile';
 import './App.css';
 
 function App() {
-  const sampleMovie: Movie = { title: "sample movie", description: "most famous action movie." };
+  const movies: Movie[] = [
+    { title: "The Matrix", description: "action movie" },
+    { title: "The Shining", description: "horror movie" },
+    { title: "Home Alone", description: "funny movie" },
+  ]
 
   return (
     <div className="App">
-      <MovieTile {...sampleMovie}></MovieTile>
+      {movies.map((movie, index) => {
+        return <MovieTile  key={index} {...movie}></MovieTile>
+      })}
     </div>
   );
 }
