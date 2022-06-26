@@ -3,6 +3,7 @@ export function MovieTile(movie: Movie) {
         <div>
             <h1>{movie.title}</h1>
             <p>{movie.description}</p>
+            <img src={movie.image} alt="" />
         </div>
     );
 }
@@ -10,4 +11,5 @@ export function MovieTile(movie: Movie) {
 export interface Movie {
     title: string;
     description: string;
+    image: string;
 }
