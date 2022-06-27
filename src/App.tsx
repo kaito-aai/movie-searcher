@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Movie, MovieTile } from './components/MovieTile';
 import './App.css';
+import appStyles from './app.module.scss';
 import { searchMoviesWithWord, getPopularMovies } from './movie-fetcher';
 
 function App() {
@@ -42,7 +43,10 @@ function App() {
 
   return (
     <div className="App">
-      <input type="text" name="" id="" value={searchWord} onChange={onSearchInputChanged}/>
+      <div className={appStyles.header}>
+        <h1>Movie Searcher</h1>
+        <input placeholder='Enter word' type="text" name="" id="" value={searchWord} onChange={onSearchInputChanged}/>
+      </div>
       <div style={appStyle}>
         {movies.map((movie, index) => {
           return <MovieTile key={index} {...movie}></MovieTile>
