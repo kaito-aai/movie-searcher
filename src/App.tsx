@@ -35,19 +35,13 @@ function App() {
     setSearchWord(event.target.value);
   }
 
-  const appStyle = {
-    display: "flex",
-    flexDirection: "row" as const,
-    flexWrap: "wrap" as const, 
-  }
-
   return (
     <div className="App">
       <div className={appStyles.header}>
         <h1>Movie Searcher</h1>
         <input placeholder='Enter word' type="text" name="" id="" value={searchWord} onChange={onSearchInputChanged}/>
       </div>
-      <div style={appStyle}>
+      <div className={appStyles.movies}>
         {movies.map((movie, index) => {
           return <MovieTile key={index} {...movie}></MovieTile>
         })}

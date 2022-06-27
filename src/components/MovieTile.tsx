@@ -1,23 +1,11 @@
+import movieTileStyles from "./movieTile.module.scss";
+
 export function MovieTile(movie: Movie) {
-    const movieTileStyle = {
-        width: "300px",
-        border: "solid",
-    }
-    const titleStyle = {
-        fontWeight: "bold",
-        padding: "0 10px",
-    }
-    const descriptionStyle = {
-        padding: "0 20px",
-    }
-    const imageStyle = {
-        padding: "0 50px",
-    }
     return (
-        <div style={movieTileStyle}>
-            <p style={titleStyle}>{movie.title}</p>
-            <p style={descriptionStyle}>{movie.description}</p>
-            <img style={imageStyle} src={movie.image} alt="" />
+        <div className={movieTileStyles.movieTile}>
+            <p className={movieTileStyles.title}>{movie.title}</p>
+            <p className={movieTileStyles.description}>{movie.description}</p>
+            <img className={movieTileStyles.image} src={movie.image} alt="" />
         </div>
     );
 }
