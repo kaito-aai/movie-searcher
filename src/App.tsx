@@ -23,7 +23,16 @@ function App() {
         setPage((prev) => {
           let p = prev + 1;
           getPopularMovies(p).then(m => {
-            setMovies((prevMovie) => [...prevMovie, ...m]);
+            setMovies((prevMovie) => {
+              let found: Movie | undefined;
+              prevMovie.forEach((movie) => {
+                found = m.find(m => m.title == movie.title);
+              })
+              if (found) {
+                return prevMovie;
+              }
+              return [...prevMovie, ...m]
+            });
           });
           return p;
         });
@@ -32,7 +41,16 @@ function App() {
         setPage((prev) => {
           let p = prev + 1;
           searchMoviesWithWord(searchWord, p).then(m => {
-            setMovies((prevMovie) => [...prevMovie, ...m]);
+            setMovies((prevMovie) => {
+              let found: Movie | undefined;
+              prevMovie.forEach((movie) => {
+                found = m.find(m => m.title == movie.title);
+              })
+              if (found) {
+                return prevMovie;
+              }
+              return [...prevMovie, ...m]
+            });
           });
           return p;
         });
