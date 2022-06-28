@@ -11,11 +11,29 @@ function App() {
   const [searchWord, setSearchWord] = useState<string>("");
   const [page, setPage] = useState(1);
   const [searchMode, setSearchMode] = useState<SearchMode>("popular");
+  const [isScrolledBottom, setIsScrolledBottom] = useState(false);
 
   const handleScroll = () => {
     const isBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight;
     if (!isBottom) {
+      setIsScrolledBottom(false);
       return
+    }
+    setIsScrolledBottom(true);
+  }
+
+  const resetSearchMode = (mode: SearchMode) => {
+    if (searchMode === mode) {
+      return;
+    }
+    setSearchMode(mode);
+    setPage(1);
+  }
+
+  // bottomにスクロールしたとき
+  useEffect(() => {
+    if (!isScrolledBottom) {
+      return;
     }
 
     switch(searchMode) {
@@ -58,20 +76,7 @@ function App() {
       default:
         break;
     }
-  }
-
-  const resetSearchMode = (mode: SearchMode) => {
-    if (searchMode === mode) {
-      return;
-    }
-    console.log("reset");
-    setSearchMode(mode);
-    setPage(1);
-  }
-
-  useEffect(() => {
-
-  }, )
+  }, [isScrolledBottom])
 
   // mount時
   useEffect(() => {
@@ -91,6 +96,10 @@ function App() {
   // 検索ワード変更時
   useEffect(() => {
     if (!searchWord) {
+      resetSearchMode("popular");
+      getPopularMovies(1).then(m => {
+        setMovies(m);
+      })
       return
     }
     resetSearchMode("word");
@@ -115,6 +124,7 @@ function App() {
           return <MovieTile key={index} {...movie}></MovieTile>
         })}
       </div>
+      {isScrolledBottom && "fetching more movies..."}
     </div>
   );
 }
