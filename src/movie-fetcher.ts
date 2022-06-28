@@ -3,8 +3,9 @@ import { Movie } from "./components/MovieTile";
 import { API_KEY, MOVIE_API_URL, MOVIE_IMAGE_URL } from "./keys/TMDB-api-keys";
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
-export const getPopularMovies = (): Promise<Movie[]> => {
-    return axios.get(`${MOVIE_API_URL}movie/popular?api_key=${API_KEY}`)
+export const getPopularMovies = (page: number): Promise<Movie[]> => {
+    console.log(`called with page: ${page}`)
+    return axios.get(`${MOVIE_API_URL}movie/popular?api_key=${API_KEY}&page=${page}`)
         .then(res => {
             const movies: Movie[] = [];
             res.data.results.forEach((movie: any) => {
@@ -17,9 +18,9 @@ export const getPopularMovies = (): Promise<Movie[]> => {
         })
 }
 
-export const searchMoviesWithWord = (word: string): Promise<Movie[]> => {
+export const searchMoviesWithWord = (word: string, page: number): Promise<Movie[]> => {
     const query = encodeURI(word);
-    return axios.get(`${MOVIE_API_URL}search/movie?api_key=${API_KEY}&query=${query}`)
+    return axios.get(`${MOVIE_API_URL}search/movie?api_key=${API_KEY}&query=${query}&page=${page}`)
         .then(res => {
             const movies: Movie[] = [];
             res.data.results.forEach((movie: any) => {

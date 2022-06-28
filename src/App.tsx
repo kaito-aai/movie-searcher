@@ -4,29 +4,80 @@ import './App.css';
 import appStyles from './app.module.scss';
 import { searchMoviesWithWord, getPopularMovies } from './movie-fetcher';
 
+type SearchMode = "popular" | "word";
+
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [searchWord, setSearchWord] = useState<string>("");
+  const [page, setPage] = useState(1);
+  const [searchMode, setSearchMode] = useState<SearchMode>("popular");
+
+  const handleScroll = () => {
+    const isBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight;
+    if (!isBottom) {
+      return
+    }
+
+    switch(searchMode) {
+      case "popular":
+        setPage((prev) => {
+          let p = prev + 1;
+          getPopularMovies(p).then(m => {
+            setMovies((prevMovie) => [...prevMovie, ...m]);
+          });
+          return p;
+        });
+        return;
+      case "word":
+        setPage((prev) => {
+          let p = prev + 1;
+          searchMoviesWithWord(searchWord, p).then(m => {
+            setMovies((prevMovie) => [...prevMovie, ...m]);
+          });
+          return p;
+        });
+        return;
+      default:
+        break;
+    }
+  }
+
+  const resetSearchMode = (mode: SearchMode) => {
+    if (searchMode === mode) {
+      return;
+    }
+    console.log("reset");
+    setSearchMode(mode);
+    setPage(1);
+  }
+
+  useEffect(() => {
+
+  }, )
 
   // mount時
   useEffect(() => {
-    getPopularMovies().then(movies => {
-      setMovies(movies);
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
+    resetSearchMode("popular");
+    getPopularMovies(1).then(m => {
+      setMovies(m);
     })
-    return
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    }
   }, [])
 
   // 検索ワード変更時
   useEffect(() => {
     if (!searchWord) {
-      // 検索ワードがないなら人気映画を表示
-      getPopularMovies().then(movies => {
-        setMovies(movies);
-      });
       return
     }
-    searchMoviesWithWord(searchWord).then(movies => {
-      setMovies(movies)
+    resetSearchMode("word");
+    searchMoviesWithWord(searchWord, 1).then(m => {
+      setMovies(m);
       return
     })
   }, [searchWord])
