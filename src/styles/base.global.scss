@@ -1,0 +1,9 @@
+@import "./fonts/fonts.scss";
+@import "./color.global.scss";
+
+body {
+    font-family: 'NotoSans', 'NotoSansJp';
+    color: $foreground-color;
+    font-size: 14px;
+    line-height: 1;
+}
