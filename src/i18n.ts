@@ -31,10 +31,11 @@ i18n.use(initReactI18next)
         supportedLngs: ['en', 'ja'],
         interpolation: {
             escapeValue: false
+        },
+        detection: {
+            order: ['navigator'],
+            caches: []
         }
     })
-
-// ローカルストレージの言語が読み込まれてしまうので削除
-localStorage.removeItem("i18nextLng");
 
 export default i18n;
