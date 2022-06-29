@@ -3,10 +3,13 @@ import { Movie, MovieTile } from './components/MovieTile';
 import './App.css';
 import appStyles from './app.module.scss';
 import { searchMoviesWithWord, getPopularMovies } from './movie-fetcher';
+import { useTranslation } from 'react-i18next';
 
 type SearchMode = "popular" | "word";
 
 function App() {
+  const { t } = useTranslation();
+
   const [movies, setMovies] = useState<Movie[]>([]);
   const [searchWord, setSearchWord] = useState<string>("");
   const [page, setPage] = useState(1);
@@ -116,8 +119,8 @@ function App() {
   return (
     <div className="App">
       <div className={appStyles.header}>
-        <h1>Movie Searcher</h1>
-        <input placeholder='Enter word' type="text" name="" id="" value={searchWord} onChange={onSearchInputChanged}/>
+        <h1>{t('Title')}</h1>
+        <input placeholder={t('SearchBoxPlaceholder')} type="text" name="" id="" value={searchWord} onChange={onSearchInputChanged}/>
       </div>
       <div className={appStyles.movies}>
         {movies.map((movie, index) => {
