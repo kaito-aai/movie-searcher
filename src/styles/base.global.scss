@@ -3,7 +3,8 @@
 
 body {
     font-family: 'NotoSans', 'NotoSansJp';
-    color: $foreground-color;
+    color: $foreground-color-basic;
+    background-color: $background-color-basic;
     font-size: 14px;
     line-height: 1;
 }

@@ -1,4 +1,15 @@
-$primary-color: #013d5d;
-$secondary-color: #56a0c8;
-$foreground-color: #f4eded;
-$background-color: #161c26;
+// theme
+$theme-primary: #0f2d3e;
+$theme-secondary: #f0a652;
+// base
+$base-light: #f3f3f3;
+$base-dark: #1c1c1c;
+// attention
+$attention-error: #ff0000;
+$attention-warning: #d9ff00;
+
+$foreground-color-basic: $base-dark;
+$background-color-basic: $base-light;
+
+$foreground-color-title: $base-light;
+$background-color-title: $theme-primary;
