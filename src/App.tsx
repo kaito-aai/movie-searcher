@@ -39,46 +39,35 @@ function App() {
       return;
     }
 
-    switch(searchMode) {
-      case "popular":
-        setPage((prev) => {
-          let p = prev + 1;
-          getPopularMovies(p).then(m => {
-            setMovies((prevMovie) => {
-              let found: Movie | undefined;
-              prevMovie.forEach((movie) => {
-                found = m.find(m => m.title == movie.title);
-              })
-              if (found) {
-                return prevMovie;
-              }
-              return [...prevMovie, ...m]
-            });
-          });
-          return p;
+    setPage((prev) => {
+      let p = prev + 1;
+
+      let moviesPromise = new Promise<Movie[]>(() => { return [] });
+      switch(searchMode) {
+        case "popular":
+          moviesPromise = getPopularMovies(p);
+          break;
+        case "word":
+          moviesPromise = searchMoviesWithWord(searchWord, p);
+          break;
+        default:
+          break;
+      }
+
+      moviesPromise.then(m => {
+        setMovies((prevMovie) => {
+          let found: Movie | undefined;
+          prevMovie.forEach((movie) => {
+            found = m.find(m => m.title == movie.title);
+          })
+          if (found) {
+            return prevMovie;
+          }
+          return [...prevMovie, ...m]
         });
-        return;
-      case "word":
-        setPage((prev) => {
-          let p = prev + 1;
-          searchMoviesWithWord(searchWord, p).then(m => {
-            setMovies((prevMovie) => {
-              let found: Movie | undefined;
-              prevMovie.forEach((movie) => {
-                found = m.find(m => m.title == movie.title);
-              })
-              if (found) {
-                return prevMovie;
-              }
-              return [...prevMovie, ...m]
-            });
-          });
-          return p;
-        });
-        return;
-      default:
-        break;
-    }
+      });
+      return p;
+    });
   }, [isScrolledBottom])
 
   // mount時
