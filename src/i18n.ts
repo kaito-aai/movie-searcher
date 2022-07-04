@@ -12,13 +12,15 @@ const resources = {
     ja: {
         translation: {
             "Title": "映画検索アプリ",
-            "SearchBoxPlaceholder": "検索ワードを入力"
+            "SearchBoxPlaceholder": "検索ワードを入力",
+            "NoDescription": "詳細がありません"
         }
     },
     en: {
         translation: {
             "Title": "Movie Searcher",
-            "SearchBoxPlaceholder": "Enter word"
+            "SearchBoxPlaceholder": "Enter word",
+            "NoDescription": "No Description"
         }
     }
 };

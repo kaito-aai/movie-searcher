@@ -20,7 +20,12 @@ export function MovieTile(movie: Movie) {
             <img className={movieTileStyles.image} src={movie.image} alt="" />
             <div id="overlay" style={{display: isShowModal ? '' : 'none'}}>
                 <div id="content">
-                    <p>{movie.description}</p>
+                    {movie.description &&
+                        <p>{movie.description}</p>
+                    }
+                    {!movie.description &&
+                        <p>{t('NoDescription')}</p>
+                    }
                 </div>
             </div>
         </div>
